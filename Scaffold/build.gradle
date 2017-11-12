@@ -25,15 +25,15 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar']);
+    implementation fileTree(dir: 'libs', include: ['*.jar']);
     def androidSupportLibVersion = "27.0.1";
-    compile "com.android.support:support-core-utils:${androidSupportLibVersion}";
-    compile "com.android.support:support-core-ui:${androidSupportLibVersion}";
-    compile "com.android.support:appcompat-v7:${androidSupportLibVersion}";
-    compile "com.android.support:recyclerview-v7:${androidSupportLibVersion}";
-    compile "com.android.support:preference-v7:${androidSupportLibVersion}";
-    compile "com.android.support:design:${androidSupportLibVersion}";
-    compile "com.android.support:support-annotations:${androidSupportLibVersion}";
+    implementation "com.android.support:support-core-utils:${androidSupportLibVersion}";
+    implementation "com.android.support:support-core-ui:${androidSupportLibVersion}";
+    implementation "com.android.support:appcompat-v7:${androidSupportLibVersion}";
+    implementation "com.android.support:recyclerview-v7:${androidSupportLibVersion}";
+    implementation "com.android.support:preference-v7:${androidSupportLibVersion}";
+    implementation "com.android.support:design:${androidSupportLibVersion}";
+    implementation "com.android.support:support-annotations:${androidSupportLibVersion}";
 }
 
 apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
