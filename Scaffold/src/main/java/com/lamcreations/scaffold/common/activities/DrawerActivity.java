@@ -30,6 +30,7 @@ import android.view.View;
 import com.lamcreations.scaffold.R;
 
 
+@SuppressWarnings("unused")
 public abstract class DrawerActivity extends CoordinatorActivity
         implements DrawerLayout.DrawerListener {
 
@@ -44,7 +45,7 @@ public abstract class DrawerActivity extends CoordinatorActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
         setupDrawerToggle();
         addLeftStartDrawerFragment();
         addRightEndDrawerFragment();

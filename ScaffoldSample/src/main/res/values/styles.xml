@@ -18,7 +18,7 @@
 
 <resources>
 
-    <style name="AppTheme" parent="Theme.Scaffold.DarkActionBar">
+    <style name="AppTheme" parent="Theme.Scaffold.Light.DarkActionBar">
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
 

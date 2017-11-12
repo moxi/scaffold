@@ -18,44 +18,23 @@ package com.lamcreations.scaffold.common.activities;
 
 import android.os.Bundle;
 import android.support.annotation.IdRes;
-import android.support.annotation.IntDef;
 import android.support.annotation.LayoutRes;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 
 import com.lamcreations.scaffold.R;
+import com.lamcreations.scaffold.common.views.AppBarLayoutScrollFlags;
 import com.lamcreations.scaffold.common.views.behaviors.FabBehavior;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
 
 public abstract class CoordinatorActivity extends ToolbarActivity {
 
-    @IntDef(
-            flag = true,
-            value = {
-                    AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS,
-                    AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS_COLLAPSED,
-                    AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED,
-                    AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL,
-                    AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP
-            }
-    )
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface AppBarLayoutScrollFlags {
-    }
-
     protected ViewStub mContentViewStub;
-    protected View mContentView;
     protected AppBarLayout mAppBarLayout;
 
     protected CoordinatorLayout mCoordinatorLayout;
@@ -64,14 +43,14 @@ public abstract class CoordinatorActivity extends ToolbarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContentViewStub = (ViewStub) findViewById(R.id.scaffold_content_stub);
-        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.scaffold_coordinator_layout);
+        mContentViewStub = findViewById(R.id.scaffold_content_stub);
+        mCoordinatorLayout = findViewById(R.id.scaffold_coordinator_layout);
         setContent(getContentLayoutResId());
         initFab();
     }
 
     protected void setContent(@LayoutRes int resId) {
-        if (findViewById(R.id.scaffold_content) == null && mContentViewStub != null) {
+        if (mContentView == null && mContentViewStub != null) {
             mContentViewStub.setLayoutResource(resId);
             mContentView = mContentViewStub.inflate();
         }
@@ -80,11 +59,12 @@ public abstract class CoordinatorActivity extends ToolbarActivity {
     protected void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar == null) {
-            mAppBarLayout = (AppBarLayout) findViewById(R.id.scaffold_app_bar_layout);
-            mToolbar = (Toolbar) findViewById(R.id.scaffold_toolbar);
+            mAppBarLayout = findViewById(R.id.scaffold_app_bar_layout);
+            mToolbar = findViewById(R.id.scaffold_toolbar);
             assert mToolbar != null;
-            if (mToolbar.getParent().getClass().equals(AppBarLayout.class)) {
-                ((AppBarLayout.LayoutParams) mToolbar.getLayoutParams()).setScrollFlags(getScrollFlags());
+            ViewGroup.LayoutParams layoutParams = mToolbar.getLayoutParams();
+            if (layoutParams instanceof AppBarLayout.LayoutParams) {
+                ((AppBarLayout.LayoutParams) layoutParams).setScrollFlags(getScrollFlags());
             }
             setSupportActionBar(mToolbar);
             actionBar = getSupportActionBar();
@@ -103,12 +83,15 @@ public abstract class CoordinatorActivity extends ToolbarActivity {
     }
 
     private void initFab() {
-        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.scaffold_floating_action_button);
+        mFloatingActionButton = findViewById(R.id.scaffold_floating_action_button);
         if (mFloatingActionButton != null) {
-            CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mFloatingActionButton.getLayoutParams();
-            layoutParams.setAnchorId(getFabAnchorId());
-            layoutParams.anchorGravity = getFabAnchorGravity();
-            layoutParams.setBehavior(getFabBehavior());
+            ViewGroup.LayoutParams layoutParams = mFloatingActionButton.getLayoutParams();
+            if (layoutParams instanceof CoordinatorLayout.LayoutParams) {
+                CoordinatorLayout.LayoutParams coordLayoutParams = (CoordinatorLayout.LayoutParams) layoutParams;
+                coordLayoutParams.setAnchorId(getFabAnchorId());
+                coordLayoutParams.anchorGravity = getFabAnchorGravity();
+                coordLayoutParams.setBehavior(getFabBehavior());
+            }
             boolean show = setupFab();
             if (!show) {
                 ViewGroup parent = (ViewGroup) mFloatingActionButton.getParent();

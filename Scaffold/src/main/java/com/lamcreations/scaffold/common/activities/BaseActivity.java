@@ -20,15 +20,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.lamcreations.scaffold.common.config.Constants;
+import com.lamcreations.scaffold.common.config.ScaffoldConstants;
+import com.lamcreations.scaffold.common.utils.ScaffoldThemeUtils;
 
-
+@SuppressWarnings("unused")
 public abstract class BaseActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
 
     protected Handler mHandler;
@@ -38,8 +40,14 @@ public abstract class BaseActivity extends AppCompatActivity implements Fragment
         super.onCreate(savedInstanceState);
 
         mHandler = new Handler();
+        setContentView(getActivityLayoutResId());
         getSupportFragmentManager().addOnBackStackChangedListener(this);
+
+        ScaffoldThemeUtils.checkScaffoldTheme(this);
     }
+
+    @LayoutRes
+    protected abstract int getActivityLayoutResId();
 
     @Override
     public void onBackStackChanged() {
@@ -48,8 +56,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Fragment
     protected Bundle getArguments() {
         Bundle args = new Bundle();
         Intent intent = getIntent();
-        if (intent.hasExtra(Constants.ARGS)) {
-            args.putAll(intent.getBundleExtra(Constants.ARGS));
+        if (intent.hasExtra(ScaffoldConstants.ARGS)) {
+            args.putAll(intent.getBundleExtra(ScaffoldConstants.ARGS));
         }
         return args;
     }

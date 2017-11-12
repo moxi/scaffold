@@ -1,7 +1,7 @@
 Scaffold
 ========
 
-An Android library designed to help you quickly create applications that follow the latest material
+An Android library designed to help you quickly create prototypes and production applications that follow the latest material
 design guidelines.
 
 For more information see [the website][4] or [the wiki][1].
@@ -15,10 +15,12 @@ Scaffold is available via jcenter. It depends on several of the [Android support
 dependencies {
     ...
 
-    compile 'com.lamcreations.scaffold:scaffold:1.0.2'
 
-    def androidSupportLibVersion = "23.3.0";
-    compile "com.android.support:support-v4:${androidSupportLibVersion}";
+    def androidSupportLibVersion = "26.0.0";
+
+    compile "com.lamcreations.scaffold:scaffold:${androidSupportLibVersion}"
+    compile "com.android.support:support-core-utils:${androidSupportLibVersion}";
+    compile "com.android.support:support-core-ui:${androidSupportLibVersion}";
     compile "com.android.support:appcompat-v7:${androidSupportLibVersion}";
     compile "com.android.support:recyclerview-v7:${androidSupportLibVersion}";
     compile "com.android.support:preference-v7:${androidSupportLibVersion}";
@@ -34,8 +36,11 @@ these classes and following the conventions of this library you can very quickly
 that follows the [material design guidelines][3] without needing to worry about a lot of boiler plate code.
 
 Activities that you can extend:
+*  BottomNavigationActivity
 *  ToolbarActivity
+*  ToolbarBottomNavigationActivity
 *  CoordinatorActivity
+*  CoordinatorBottomNavigationActivity
 *  DrawerActivity
 *  TabActivity
 *  TabDrawerActivity
@@ -62,6 +67,8 @@ Views that you can use/extend:
 Other classes you might find helpful:
 *  ImagePagerAdapter
 *  BasicRecyclerViewAdapter
+*  FabBehavior
+*  BottomNavigationBehavior
 
 For more information see [the wiki][1].
 

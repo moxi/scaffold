@@ -18,20 +18,20 @@ package com.lamcreations.scaffoldsampleapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import com.lamcreations.scaffold.common.activities.SplashScreenActivity;
 import com.lamcreations.scaffold.common.utils.DisplayUtils;
 
-
 public class SplashActivity extends SplashScreenActivity {
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        int padding = DisplayUtils.densityPixelsToScreenPixels(this, 10);
+        int padding = DisplayUtils.densityPixelsToScreenPixels(this, 16);
         mSplashImage.setPadding(padding, padding, padding, padding);
+        mSplashImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
         setSplashImage(R.drawable.scaffold);
 
         mHandler.postDelayed(new Runnable() {
